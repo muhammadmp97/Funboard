@@ -1,0 +1,74 @@
+.container {
+    width: 800px;
+    margin: 0 auto;
+}
+
+#board {
+    display: grid;
+    width: 100%;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    border: 4px solid #F6D776;
+}
+
+#board > div {
+    position: relative;
+    height: 133px;
+}
+
+#board .light {
+    background: #FAEF9B;
+}
+
+#board .dark {
+    background: #F6D776;
+}
+
+#board .finish {
+    background: #aaa;
+}
+
+.tile__number {
+    position: absolute;
+    font-size: 3em;
+    font-weight: bold;
+    top: 10px;
+    left: 18px;
+    opacity: .6;
+    user-select: none;
+}
+
+.dark .tile__number {
+    color: #FAEF9B;
+}
+
+.light .tile__number {
+    color: #F6D776;
+}
+
+.finish .tile__number {
+    color: #888;
+}
+
+#board .finish .icon {
+    position: absolute;
+    font-size: 2.8em;
+    bottom: 10px;
+    right: 10px;
+    user-select: none;
+}
+
+#board .extra {
+    position: absolute;
+    font-size: 2.2em;
+    bottom: 14px;
+    right: 9px;
+    user-select: none;
+}
+
+#board .player {
+    position: absolute;
+    font-size: 4em;
+    bottom: 13px;
+    right: 10px;
+    user-select: none;
+}
