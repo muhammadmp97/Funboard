@@ -1,6 +1,42 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
 .container {
     width: 800px;
     margin: 0 auto;
+}
+
+.float-left {
+    float: left;
+}
+
+.float-right {
+    float: right;
+}
+
+.w-50 {
+    width: 50%;
+}
+
+.d-inline-block {
+    display: inline-block;
+}
+
+#header {
+    width: 100%;
+    height: 30px;
+    background-color: #F6D776;
+    padding: 10px 0 0;
+    margin-bottom: 30px;
+}
+
+#header .logo {
+    color: #333;
+    text-decoration: none;
+    font-weight: bolder;
+    font-size: 9px;
 }
 
 #board {
