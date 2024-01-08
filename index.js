@@ -17,6 +17,10 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '/src/templates/home.html'))
 })
 
+app.get('/g/:key', (req, res) => {
+  res.sendFile(path.join(__dirname, '/src/templates/game.html'))
+})
+
 app.post('/api/login', async (req, res) => {
   const token = await authService.loginOrRegister(req.body.username, req.body.password)
 
@@ -37,9 +41,21 @@ app.get('/api/games', async (req, res) => {
   })
 })
 
+app.get('/api/games/:key', async (req, res) => {
+  const game = await gamesService.getByKey(req.params.key)
+
+  if (!game) {
+    return res
+      .json({ message: 'Game not found.' })
+      .status(404)
+  }
+
+  return res.json({ data: game })
+})
+
 app.post('/api/games', async (req, res) => {
   const leader = await authService.getByToken(req.header('Authorization'))
-  const gameKey = await gamesService.createGame(leader, req.body.isPublic == true)
+  const gameKey = await gamesService.createGame(leader, req.body.isPublic == 'true')
 
   return res.json({
     data: {

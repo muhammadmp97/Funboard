@@ -8,6 +8,12 @@ const getAll = async function () {
     .toArray()
 }
 
+const getByKey = async function (key) {
+  return mongodb
+    .collection('games')
+    .findOne({ key: key })
+}
+
 const createGame = async function (leader, isPublic) {
   const gameKey = random.str(6, true)
 
@@ -97,4 +103,4 @@ const createGame = async function (leader, isPublic) {
   return gameKey
 }
 
-export { getAll, createGame }
+export { getAll, getByKey, createGame }

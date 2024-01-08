@@ -39,6 +39,16 @@
     font-size: 9px;
 }
 
+#players {
+    margin: 40px;
+}
+
+#players .player {
+    font-size: 3.5em;
+    margin-bottom: 10px;
+    user-select: none;
+}
+
 #board {
     display: grid;
     width: 100%;

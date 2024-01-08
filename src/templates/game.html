@@ -3,114 +3,109 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="stylesheet" href="/css/style.css">
     <title>Funboard - Game</title>
 </head>
 <body>
+    <div id="players" class="float-left"></div>
+
     <div class="container">
         <div id="board">
-            <div class="light">
+            <div class="light" data-number="25">
                 <div class="tile__number">25</div>
             </div>
-            <div class="dark">
+            <div class="dark" data-number="26">
                 <div class="tile__number">26</div>
             </div>
-            <div class="light">
+            <div class="light" data-number="27">
                 <div class="tile__number">27</div>
             </div>
-            <div class="dark">
+            <div class="dark" data-number="28">
                 <div class="tile__number">28</div>
-                <div class="extra">🪨</div>
             </div>
-            <div class="light">
+            <div class="light" data-number="29">
                 <div class="tile__number">29</div>
             </div>
-            <div class="finish">
+            <div class="finish" data-number="30">
                 <div class="tile__number">30</div>
                 <div class="icon">🏁</div>
             </div>
-            <div class="dark">
+            <div class="dark" data-number="24">
                 <div class="tile__number">24</div>
             </div>
-            <div class="light">
+            <div class="light" data-number="23">
                 <div class="tile__number">23</div>
-                <div class="extra">🚪</div>
             </div>
-            <div class="dark">
+            <div class="dark" data-number="22">
                 <div class="tile__number">22</div>
             </div>
-            <div class="light">
+            <div class="light" data-number="21">
                 <div class="tile__number">21</div>
             </div>
-            <div class="dark">
+            <div class="dark" data-number="20">
                 <div class="tile__number">20</div>
-                <div class="extra">💣</div>
             </div>
-            <div class="light">
+            <div class="light" data-number="19">
                 <div class="tile__number">19</div>
             </div>
-            <div class="light">
+            <div class="light" data-number="13">
                 <div class="tile__number">13</div>
-                <div class="extra">🚪</div>
             </div>
-            <div class="dark">
+            <div class="dark" data-number="14">
                 <div class="tile__number">14</div>
             </div>
-            <div class="light">
+            <div class="light" data-number="15">
                 <div class="tile__number">15</div>
-                <div class="extra">💣</div>
             </div>
-            <div class="dark">
+            <div class="dark" data-number="16">
                 <div class="tile__number">16</div>
             </div>
-            <div class="light">
+            <div class="light" data-number="17">
                 <div class="tile__number">17</div>
             </div>
-            <div class="dark">
+            <div class="dark" data-number="18">
                 <div class="tile__number">18</div>
             </div>
-            <div class="dark">
+            <div class="dark" data-number="12">
                 <div class="tile__number">12</div>
-                <div class="extra">🪨</div>
             </div>
-            <div class="light">
+            <div class="light" data-number="11">
                 <div class="tile__number">11</div>
             </div>
-            <div class="dark">
+            <div class="dark" data-number="10">
                 <div class="tile__number">10</div>
-                <div class="player">🔵</div>
             </div>
-            <div class="light">
+            <div class="light" data-number="9">
                 <div class="tile__number">9</div>
-                <div class="extra">💣</div>
             </div>
-            <div class="dark">
+            <div class="dark" data-number="8">
                 <div class="tile__number">8</div>
             </div>
-            <div class="light">
+            <div class="light" data-number="7">
                 <div class="tile__number">7</div>
             </div>
-            <div class="light">
+            <div class="light" data-number="1">
                 <div class="tile__number">1</div>
-                <div class="player">🔴</div>
             </div>
-            <div class="dark">
+            <div class="dark" data-number="2">
                 <div class="tile__number">2</div>
             </div>
-            <div class="light">
+            <div class="light" data-number="3">
                 <div class="tile__number">3</div>
             </div>
-            <div class="dark">
+            <div class="dark" data-number="4">
                 <div class="tile__number">4</div>
-                <div class="extra">🎲</div>
             </div>
-            <div class="light">
+            <div class="light" data-number="5">
                 <div class="tile__number">5</div>
             </div>
-            <div class="dark">
+            <div class="dark" data-number="6">
                 <div class="tile__number">6</div>
             </div>
         </div>
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="/js/game.js"></script>
 </body>
 </html>
