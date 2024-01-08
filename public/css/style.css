@@ -61,20 +61,11 @@
     height: 133px;
 }
 
-#board .light {
-    background: #FAEF9B;
-}
-
-#board .dark {
-    background: #F6D776;
-}
-
-#board .finish {
-    background: #aaa;
-}
-
-.tile__number {
+#board > div::before {
+    content: attr(data-number);
     position: absolute;
+    z-index: 99;
+    font-size: 29px;
     font-size: 3em;
     font-weight: bold;
     top: 10px;
@@ -83,16 +74,28 @@
     user-select: none;
 }
 
-.dark .tile__number {
-    color: #FAEF9B;
+#board .light {
+    background: #FAEF9B;
 }
 
-.light .tile__number {
+#board .dark {
+    background: #F6D776;
+}
+
+#board .light::before {
     color: #F6D776;
 }
 
-.finish .tile__number {
+#board .dark::before {
+    color: #FAEF9B;
+}
+
+#board .finish::before {
     color: #888;
+}
+
+#board .finish {
+    background: #aaa;
 }
 
 #board .finish .icon {
