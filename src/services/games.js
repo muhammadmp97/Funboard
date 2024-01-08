@@ -4,7 +4,7 @@ import * as random from '../utils/random.js'
 const getAll = async function () {
   return mongodb
     .collection('games')
-    .find({ isLive: true })
+    .find({ isLive: true, isPublic: true })
     .toArray()
 }
 

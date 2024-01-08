@@ -5,6 +5,14 @@ if (localStorage.getItem('funboardToken')) {
     .show()
 }
 
+$.get('/api/games')
+  .then(res => {
+    res.data.forEach(game => {
+      const leader = game.players.filter(player => player.isLeader)[0]
+      $('#live-games').append(`<li><a href="/g/${game.key}">${game.key} by ${leader.username} (${game.players.length} player${game.players.length > 1 ? 's' : ''})</a></li>`)
+    })
+  })
+
 $('.login-form__submit').click(() => {
   const username = $('.login-form__username').val()
   const password = $('.login-form__password').val()
