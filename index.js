@@ -3,7 +3,7 @@ import { fileURLToPath } from 'url'
 import path from 'path'
 import mongodb from './src/clients/mongodb.js'
 import * as gamesService from './src/services/games.js'
-import { loginOrRegister } from './src/services/authentication.js'
+import * as authService from './src/services/authentication.js'
 
 const app = express()
 app.use(express.json())
@@ -18,7 +18,7 @@ app.get('/', (req, res) => {
 })
 
 app.post('/api/login', async (req, res) => {
-  const token = await loginOrRegister(req.body.username, req.body.password)
+  const token = await authService.loginOrRegister(req.body.username, req.body.password)
 
   if (!token) {
     return res
@@ -34,6 +34,17 @@ app.get('/api/games', async (req, res) => {
 
   res.json({
     data: liveGames
+  })
+})
+
+app.post('/api/games', async (req, res) => {
+  const leader = await authService.getByToken(req.header('Authorization'))
+  const gameKey = await gamesService.createGame(leader, req.body.isPublic == true)
+
+  return res.json({
+    data: {
+      key: gameKey
+    }
   })
 })
 

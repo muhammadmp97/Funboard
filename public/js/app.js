@@ -18,3 +18,15 @@ $('.login-form__submit').click(() => {
       alert('Something went wrong!')
     })
 })
+
+$('#create-game button').click(() => {
+  const isPublic = $('#create-game select').val() == 'public'
+  
+  $.ajax({
+    url: '/api/games',
+    type: 'post',
+    data: { isPublic: isPublic },
+    headers: { Authorization: localStorage.getItem('funboardToken') },
+    success: (res) => location.href = `/g/${res.data.key}`
+  })
+})

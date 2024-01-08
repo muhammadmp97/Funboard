@@ -42,4 +42,10 @@ const loginOrRegister = async function (username, password) {
   return token
 }
 
-export { loginOrRegister }
+const getByToken = async function (token) {
+  return mongodb
+    .collection('players')
+    .findOne({ token: token })
+}
+
+export { loginOrRegister, getByToken }
