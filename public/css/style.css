@@ -29,7 +29,7 @@
 }
 
 .d-none {
-    display: none;
+    display: none !important;
 }
 
 #header {
@@ -58,7 +58,9 @@
 }
 
 #gameButtons > button {
-    padding: 15px 40px;
+    width: 150px;
+    display: block;
+    padding: 15px 0;
 }
 
 #board {

@@ -9,14 +9,9 @@ const loadGame = function (key) {
       this.game = res.data
       document.title = `Funboard - ${gameKey}`
       prepareBoard()
+      refreshButtons()
 
-      if (this.game.players.some(player => player.username === localStorage.getItem('funboardUsername'))) {
-        $('#joinButton').attr('disabled', 'disabled')
-      }
-
-      if (this.game.isStarted || !this.game.players.some(player => player.username === localStorage.getItem('funboardUsername') && player.isLeader)) {
-        $('#startButton').addClass('d-none')
-      }
+      socket.emit('connected', gameKey)
     })
 }
 
@@ -51,6 +46,21 @@ const prepareBoard = function () {
   })
 }
 
+const refreshButtons = function () {
+  const userIsPlayer = this.game.players.some(player => player.username === localStorage.getItem('funboardUsername'))
+  if (userIsPlayer || this.game.isStarted) {
+    $('#joinButton').attr('disabled', 'disabled')
+  }
+
+  if (this.game.isStarted || !this.game.players.some(player => player.username === localStorage.getItem('funboardUsername') && player.isLeader)) {
+    $('#startButton').addClass('d-none')
+  }
+
+  if (!this.game.isStarted || !userIsPlayer || this.game.players[this.game.turn].username !== localStorage.getItem('funboardUsername')) {
+    $('#shakeButton').attr('disabled', 'disabled')
+  }
+}
+
 const getGamePieceByColor = function (color) {
   return {
     red: '🔴',
@@ -68,15 +78,16 @@ $('#startButton').click(() => {
   this.socket.emit('start', { token: token, gameKey: gameKey })
 })
 
-this.socket.on('change', (data) => {
+this.socket.on('joined', (data) => {
   this.game = data.game
   prepareBoard()
+  refreshButtons()
 })
 
 this.socket.on('started', (data) => {
-  $('#startButton').remove()
   this.game = data.game
   prepareBoard()
+  refreshButtons()
 })
 
 loadGame(gameKey)

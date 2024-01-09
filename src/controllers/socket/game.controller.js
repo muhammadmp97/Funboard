@@ -13,6 +13,10 @@ const joinGame = async function (playerToken, gameKey) {
     return false
   }
 
+  if (game.isStarted) {
+    return false
+  }
+
   if (game.players.length >= 4) {
     return false
   }
@@ -42,6 +46,8 @@ const startGame = async function (playerToken, gameKey) {
   }
 
   await gamesService.startGame(gameKey)
+
+  return true
 }
 
 export { joinGame, startGame }

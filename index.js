@@ -23,15 +23,19 @@ app.use('/api/login', authApiController);
 app.use('/api/games', gameApiController);
 
 io.on('connection', (socket) => {
+  socket.on('connected', (gameKey) => {
+    socket.join(`room-${gameKey}`)
+  })
+
   socket.on('join', async (data) => {
     if (await gameSocketController.joinGame(data.token, data.gameKey)) {
-      socket.emit('change', { game: await getGameByKey(data.gameKey) })
+      io.to(`room-${data.gameKey}`).emit('joined', { game: await getGameByKey(data.gameKey) })
     }
   })
 
   socket.on('start', async (data) => {
     if (await gameSocketController.startGame(data.token, data.gameKey)) {
-      socket.emit('started', { game: await getGameByKey(data.gameKey) })
+      io.to(`room-${data.gameKey}`).emit('started', { game: await getGameByKey(data.gameKey) })
     }
   })
 
