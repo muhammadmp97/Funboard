@@ -9,6 +9,10 @@
 <body>
     <div id="players" class="float-left"></div>
 
+    <div class="float-right">
+        <button id="joinButton" style="padding: 5px 20px;">Join</button>
+    </div>
+
     <div class="container">
         <div id="board">
             <div class="light" data-number="25"></div>
@@ -47,6 +51,7 @@
     </div>
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
     <script src="/js/game.js"></script>
 </body>
 </html>

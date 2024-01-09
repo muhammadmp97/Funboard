@@ -1,5 +1,7 @@
+this.socket = io()
 this.game = null
 const gameKey = /\/g\/(.*)/.exec(location.href)[1]
+const token = localStorage.getItem('funboardToken')
 
 const loadGame = function (key) {
   $.get(`/api/games/${key}`)
@@ -7,6 +9,10 @@ const loadGame = function (key) {
       this.game = res.data
       document.title = `Funboard - ${gameKey}`
       prepareBoard()
+
+      if (this.game.players.some(player => player.username === localStorage.getItem('funboardUsername'))) {
+        $('#joinButton').attr('disabled', 'disabled')
+      }
     })
 }
 
@@ -49,5 +55,14 @@ const getGamePieceByColor = function (color) {
     black: '⚫️'
   }[color]
 }
+
+$('#joinButton').click(() => {
+  this.socket.emit('join', { token: token, gameKey: gameKey })
+})
+
+this.socket.on('change', (data) => {
+  this.game = data.game
+  prepareBoard()
+})
 
 loadGame(gameKey)

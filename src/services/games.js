@@ -103,4 +103,20 @@ const createGame = async function (leader, isPublic) {
   return gameKey
 }
 
-export { getAll, getByKey, createGame }
+const addPlayerToGame = async function (gameKey, playerUsername, playerColor) {
+  const playerObject = {
+    username: playerUsername,
+    color: playerColor,
+    isLeader: false,
+    position: 0
+  }
+
+  mongodb
+    .collection('games')
+    .updateOne(
+      { key: gameKey },
+      { $push: { players: playerObject } }
+    )
+}
+
+export { getAll, getByKey, createGame, addPlayerToGame }
