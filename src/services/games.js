@@ -71,6 +71,10 @@ const createGame = async function (leader, isPublic) {
       continue
     }
 
+    if (doors.filter(door => door.position === position).length > 0) {
+      continue
+    }
+
     stones.push(position)
     stoneCount--
   }
@@ -84,6 +88,7 @@ const createGame = async function (leader, isPublic) {
       isStarted: false,
       winner: false,
       createdAt: Date.now(),
+      turn: 0,
       board: {
         mines: mines,
         prizes: prizes,
@@ -95,7 +100,7 @@ const createGame = async function (leader, isPublic) {
           username: leader.username,
           color: 'red',
           isLeader: true,
-          position: 0
+          position: 0,
         }
       ]
     })
