@@ -119,4 +119,13 @@ const addPlayerToGame = async function (gameKey, playerUsername, playerColor) {
     )
 }
 
-export { getAll, getByKey, createGame, addPlayerToGame }
+const startGame = async function (gameKey) {
+  mongodb
+    .collection('games')
+    .updateOne(
+      { key: gameKey },
+      { $set: { isStarted: true } }
+    )
+}
+
+export { getAll, getByKey, createGame, addPlayerToGame, startGame }

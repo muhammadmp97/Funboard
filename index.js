@@ -29,6 +29,12 @@ io.on('connection', (socket) => {
     }
   })
 
+  socket.on('start', async (data) => {
+    if (await gameSocketController.startGame(data.token, data.gameKey)) {
+      socket.emit('started', { game: await getGameByKey(data.gameKey) })
+    }
+  })
+
   socket.on('disconnect', () => {
     //
   })

@@ -13,6 +13,10 @@ const loadGame = function (key) {
       if (this.game.players.some(player => player.username === localStorage.getItem('funboardUsername'))) {
         $('#joinButton').attr('disabled', 'disabled')
       }
+
+      if (this.game.isStarted || !this.game.players.some(player => player.username === localStorage.getItem('funboardUsername') && player.isLeader)) {
+        $('#startButton').addClass('d-none')
+      }
     })
 }
 
@@ -60,7 +64,17 @@ $('#joinButton').click(() => {
   this.socket.emit('join', { token: token, gameKey: gameKey })
 })
 
+$('#startButton').click(() => {
+  this.socket.emit('start', { token: token, gameKey: gameKey })
+})
+
 this.socket.on('change', (data) => {
+  this.game = data.game
+  prepareBoard()
+})
+
+this.socket.on('started', (data) => {
+  $('#startButton').remove()
   this.game = data.game
   prepareBoard()
 })

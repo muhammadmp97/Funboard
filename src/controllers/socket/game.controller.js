@@ -1,9 +1,9 @@
 import { getByToken as getPlayerByToken } from "../../services/authentication.js"
-import { getByKey as getGameByKey, addPlayerToGame } from "../../services/games.js"
+import * as gamesService from "../../services/games.js"
 
 const joinGame = async function (playerToken, gameKey) {
   const player = await getPlayerByToken(playerToken)
-  const game = await getGameByKey(gameKey)
+  const game = await gamesService.getByKey(gameKey)
 
   if (!player || !game) {
     return false
@@ -19,9 +19,29 @@ const joinGame = async function (playerToken, gameKey) {
 
   const usedColors = game.players.map(player => player.color)
   const playerColor = ['red', 'blue', 'green', 'black'].filter(color => !usedColors.includes(color))[0]
-  await addPlayerToGame(gameKey, player.username, playerColor)
+  await gamesService.addPlayerToGame(gameKey, player.username, playerColor)
 
   return true
 }
 
-export { joinGame }
+const startGame = async function (playerToken, gameKey) {
+  const player = await getPlayerByToken(playerToken)
+  const game = await gamesService.getByKey(gameKey)
+
+  if (!player || !game) {
+    return false
+  }
+
+  if (game.isStarted) {
+    return false
+  }
+
+  const playerIsLeader = game.players.some(gamePlayer => player.username === gamePlayer.username && gamePlayer.isLeader)
+  if (!playerIsLeader) {
+    return false
+  }
+
+  await gamesService.startGame(gameKey)
+}
+
+export { joinGame, startGame }
