@@ -1,5 +1,6 @@
 import express from 'express'
 import * as gamesService from '../../services/games.js'
+import * as authService from '../../services/authentication.js'
 
 const router = express.Router()
 
