@@ -8,8 +8,8 @@ router.post('/', async (req, res) => {
 
   if (!token) {
     return res
-      .send({ "message": "Authentication failed." })
       .status(401)
+      .send({ "message": "Authentication failed." })
   }
 
   return res.json({ token: token })
