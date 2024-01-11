@@ -4,6 +4,10 @@ const between = function (from, to) {
     return rando(from, to)
 }
 
+const fromArray = function (arr) {
+    return rando(arr)
+}
+
 const str = function (length, onlyCapital = false) {
     let input = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
     let output = ''
@@ -20,4 +24,4 @@ const str = function (length, onlyCapital = false) {
     return output
 }
 
-export { between, str }
+export { between, fromArray, str }

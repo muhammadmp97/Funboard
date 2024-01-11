@@ -23,8 +23,8 @@ const joinGame = async function (playerToken, gameKey) {
   }
 
   const usedColors = game.players.map(player => player.color)
-  const playerColor = ['red', 'blue', 'green', 'black'].filter(color => !usedColors.includes(color))[0]
-  await gamesService.addPlayerToGame(gameKey, player.username, playerColor)
+  const playerColor = ['red', 'blue', 'green', 'black'].filter(color => !usedColors.includes(color))
+  await gamesService.addPlayerToGame(gameKey, player.username, random.fromArray(playerColor).value)
 
   return true
 }
