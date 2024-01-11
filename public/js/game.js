@@ -59,6 +59,10 @@ const refreshButtons = function () {
   if (!this.game.isStarted || !userIsPlayer || this.game.players[this.game.turn].username !== localStorage.getItem('funboardUsername')) {
     $('#shakeButton').attr('disabled', 'disabled')
   }
+
+  if (this.game.players[this.game.turn].username === localStorage.getItem('funboardUsername')) {
+    $('#shakeButton').removeAttr('disabled')
+  }
 }
 
 const getGamePieceByColor = function (color) {
@@ -78,6 +82,10 @@ $('#startButton').click(() => {
   this.socket.emit('start', { token: token, gameKey: gameKey })
 })
 
+$('#shakeButton').click(() => {
+  this.socket.emit('shake', { token: token, gameKey: gameKey })
+})
+
 this.socket.on('joined', (data) => {
   this.game = data.game
   prepareBoard()
@@ -85,6 +93,14 @@ this.socket.on('joined', (data) => {
 })
 
 this.socket.on('started', (data) => {
+  this.game = data.game
+  prepareBoard()
+  refreshButtons()
+})
+
+this.socket.on('shaked', (data) => {
+  console.log(data.diceNumber)
+  alert(data.diceNumber)
   this.game = data.game
   prepareBoard()
   refreshButtons()

@@ -133,4 +133,91 @@ const startGame = async function (gameKey) {
     )
 }
 
-export { getAll, getByKey, createGame, addPlayerToGame, startGame }
+const handleShake = async function (game, diceNumber) {
+  let nextTurn = game.turn
+
+  if (game.players[game.turn].position === 0 && diceNumber !== 6) {
+    return mongodb
+      .collection('games')
+      .updateOne(
+        { key: game.key },
+        {
+          $set: {
+            turn: game.turn == game.players.length - 1 ? 0 : game.turn + 1
+          }
+        }
+      )
+  }
+
+  if (game.players[game.turn].position === 0 && diceNumber === 6) {
+    return mongodb
+      .collection('games')
+      .updateOne(
+        { key: game.key },
+        {
+          $set: {
+            turn: nextTurn,
+            [`players.${game.turn}.position`]: 1
+          }
+        }
+      )
+  }
+
+  nextTurn = game.turn == game.players.length - 1 ? 0 : game.turn + 1
+  let newPosition = game.players[game.turn].position + diceNumber
+
+  if (newPosition === 30) {
+    return mongodb
+      .collection('games')
+      .updateOne(
+        { key: game.key },
+        {
+          $set: {
+            winner: game.players[game.turn].username,
+            [`players.${game.turn}.position`]: 30
+          }
+        }
+      )
+  }
+
+  if (newPosition > 30) {
+    newPosition = game.players[game.turn].position
+  }
+
+  if (game.board.stones.includes(newPosition)) {
+    newPosition = game.players[game.turn].position
+  }
+
+  if (game.board.doors.some(door => door.position === newPosition)) {
+    let door = game.board.doors.filter(door => door.position === newPosition)[0]
+    newPosition = door.destinition
+  }
+
+  let newMines = game.board.mines
+  if (game.board.mines.includes(newPosition)) {
+    newMines = newMines.filter(position => position !== newPosition)
+    newPosition = 0
+  }
+
+  let newPrizes = game.board.prizes
+  if (game.board.prizes.includes(newPosition)) {
+    newPrizes = newPrizes.filter(position => position !== newPosition)
+    nextTurn = game.turn
+  }
+
+  mongodb
+    .collection('games')
+    .updateOne(
+      { key: game.key },
+      {
+        $set: {
+          turn: nextTurn,
+          'board.mines': newMines,
+          'board.prizes': newPrizes,
+          [`players.${game.turn}.position`]: newPosition
+        }
+      }
+    )
+}
+
+export { getAll, getByKey, createGame, addPlayerToGame, startGame, handleShake }

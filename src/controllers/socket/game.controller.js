@@ -1,5 +1,6 @@
 import { getByToken as getPlayerByToken } from "../../services/authentication.js"
 import * as gamesService from "../../services/games.js"
+import * as random from "../../utils/random.js"
 
 const joinGame = async function (playerToken, gameKey) {
   const player = await getPlayerByToken(playerToken)
@@ -50,4 +51,26 @@ const startGame = async function (playerToken, gameKey) {
   return true
 }
 
-export { joinGame, startGame }
+const shake = async function (playerToken, gameKey) {
+  const player = await getPlayerByToken(playerToken)
+  const game = await gamesService.getByKey(gameKey)
+
+  if (!player || !game) {
+    return false
+  }
+
+  if (!game.isStarted) {
+    return false
+  }
+
+  if (game.players[game.turn].username !== player.username) {
+    return false
+  }
+
+  const diceNumber = random.between(1, 6)
+  await gamesService.handleShake(game, diceNumber)
+
+  return diceNumber
+}
+
+export { joinGame, startGame, shake }

@@ -39,6 +39,13 @@ io.on('connection', (socket) => {
     }
   })
 
+  socket.on('shake', async (data) => {
+    const result = await gameSocketController.shake(data.token, data.gameKey)
+    if (result != false) {
+      io.to(`room-${data.gameKey}`).emit('shaked', { diceNumber: result, game: await getGameByKey(data.gameKey) })
+    }
+  })
+
   socket.on('disconnect', () => {
     //
   })
