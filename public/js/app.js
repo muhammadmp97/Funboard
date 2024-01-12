@@ -21,6 +21,7 @@ $('.login-form__submit').click(() => {
     .done((res) => {
       localStorage.setItem('funboardUsername', username)
       localStorage.setItem('funboardToken', res.token)
+      location.href = '/'
     })
     .fail(() => {
       alert('Something went wrong!')
