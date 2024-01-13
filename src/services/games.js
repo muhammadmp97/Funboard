@@ -86,7 +86,7 @@ const createGame = async function (leader, isPublic) {
       isPublic: isPublic,
       isLive: true,
       isStarted: false,
-      winner: false,
+      winner: null,
       createdAt: Date.now(),
       turn: 0,
       board: {
@@ -174,6 +174,7 @@ const handleShake = async function (game, diceNumber) {
         {
           $set: {
             winner: game.players[game.turn].username,
+            isLive: false,
             [`players.${game.turn}.position`]: 30
           }
         }
