@@ -65,6 +65,16 @@ const refreshButtons = function () {
   }
 }
 
+const toast = function (title, content) {
+  const timestamps = Date.now()
+  const element = `<div class="toast" data-id="${timestamps}" style="display:none;"><div class="toast__title">${title}</div><div class="toast__content">${content}</div></div>`
+  $('#toast-wrapper').append(element)
+  $(`div[data-id=${timestamps}]`).fadeIn()
+  setTimeout(() => {
+    $(`div[data-id=${timestamps}]`).remove()
+  }, 5000)
+}
+
 const getGamePieceByColor = function (color) {
   return {
     red: '🔴',
@@ -72,6 +82,17 @@ const getGamePieceByColor = function (color) {
     green: '🟢',
     black: '⚫️'
   }[color]
+}
+
+const getDiceEmojiByNumber = function (number) {
+  return {
+    1: '⚀',
+    2: '⚁',
+    3: '⚂',
+    4: '⚃',
+    5: '⚄',
+    6: '⚅'
+  }[number]
 }
 
 $('#joinButton').click(() => {
@@ -90,20 +111,21 @@ this.socket.on('joined', (data) => {
   this.game = data.game
   prepareBoard()
   refreshButtons()
+  toast(data.playerUsername, 'I wanna play!')
 })
 
 this.socket.on('started', (data) => {
   this.game = data.game
   prepareBoard()
   refreshButtons()
+  toast('Funboard', 'Game just started!')
 })
 
 this.socket.on('shaked', (data) => {
-  console.log(data.diceNumber)
-  alert(data.diceNumber)
   this.game = data.game
   prepareBoard()
   refreshButtons()
+  toast(data.playerUsername, getDiceEmojiByNumber(data.diceNumber))
 })
 
 loadGame(gameKey)

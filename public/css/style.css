@@ -1,6 +1,7 @@
 * {
     margin: 0;
     padding: 0;
+    font-family: 'Inter', sans-serif;
 }
 
 .container {
@@ -57,7 +58,7 @@
     user-select: none;
 }
 
-#gameButtons > button {
+#gameButtons>button {
     width: 150px;
     display: block;
     padding: 15px 0;
@@ -70,12 +71,12 @@
     border: 4px solid #F6D776;
 }
 
-#board > div {
+#board>div {
     position: relative;
     height: 133px;
 }
 
-#board > div::before {
+#board>div::before {
     content: attr(data-number);
     position: absolute;
     z-index: 99;
@@ -130,8 +131,39 @@
 
 #board .player {
     position: absolute;
+    z-index: 99;
     font-size: 4em;
     bottom: 13px;
     right: 10px;
     user-select: none;
+}
+
+#toast-wrapper {
+    position: absolute;
+    z-index: 99;
+    bottom: 25px;
+    left: 25px;
+}
+
+.toast {
+    display: table;
+    color: #fff;
+    border-radius: 5px;
+    font-size: 17px;
+    overflow: hidden;
+    margin-bottom: 7px;
+}
+
+.toast__title {
+    float: left;
+    background: rgba(51, 51, 51, .8);
+    font-weight: bold;
+    padding: 8px 15px;
+}
+
+.toast__content {
+    float: right;
+    background: rgba(0, 0, 0, .8);
+    font-weight: normal;
+    padding: 8px 18px;
 }

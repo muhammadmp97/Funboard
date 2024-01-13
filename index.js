@@ -28,8 +28,9 @@ io.on('connection', (socket) => {
   })
 
   socket.on('join', async (data) => {
-    if (await gameSocketController.joinGame(data.token, data.gameKey)) {
-      io.to(`room-${data.gameKey}`).emit('joined', { game: await getGameByKey(data.gameKey) })
+    const player = await gameSocketController.joinGame(data.token, data.gameKey)
+    if (player) {
+      io.to(`room-${data.gameKey}`).emit('joined', { playerUsername: player.username, game: await getGameByKey(data.gameKey) })
     }
   })
 
@@ -42,7 +43,7 @@ io.on('connection', (socket) => {
   socket.on('shake', async (data) => {
     const result = await gameSocketController.shake(data.token, data.gameKey)
     if (result != false) {
-      io.to(`room-${data.gameKey}`).emit('shaked', { diceNumber: result, game: await getGameByKey(data.gameKey) })
+      io.to(`room-${data.gameKey}`).emit('shaked', { playerUsername: result.player.username, diceNumber: result.diceNumber, game: await getGameByKey(data.gameKey) })
     }
   })
 

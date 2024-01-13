@@ -26,7 +26,7 @@ const joinGame = async function (playerToken, gameKey) {
   const playerColor = ['red', 'blue', 'green', 'black'].filter(color => !usedColors.includes(color))
   await gamesService.addPlayerToGame(gameKey, player.username, random.fromArray(playerColor).value)
 
-  return true
+  return player
 }
 
 const startGame = async function (playerToken, gameKey) {
@@ -70,7 +70,10 @@ const shake = async function (playerToken, gameKey) {
   const diceNumber = random.between(1, 6)
   await gamesService.handleShake(game, diceNumber)
 
-  return diceNumber
+  return {
+    player: player,
+    diceNumber: diceNumber
+  }
 }
 
 export { joinGame, startGame, shake }
