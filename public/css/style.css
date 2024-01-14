@@ -59,8 +59,11 @@
 }
 
 #gameButtons>button {
+    background: #FAEF9B;
     width: 150px;
     display: block;
+    border-color: #F6D776;
+    outline: none;
     padding: 15px 0;
 }
 
