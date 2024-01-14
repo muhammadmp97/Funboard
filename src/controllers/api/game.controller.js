@@ -28,8 +28,8 @@ router.get('/:key', async function (req, res) {
 
   if (!game) {
     return res
-      .json({ message: 'Game not found.' })
       .status(404)
+      .json({ message: 'Game not found.' })
   }
 
   return res.json({ data: game })

@@ -18,6 +18,7 @@ const io = new Server(httpServer, { });
 
 app.get('/', (req, res) => res.sendFile(path('/src/templates/home.html')))
 app.get('/g/:key', (req, res) => res.sendFile(path('/src/templates/game.html')))
+app.get('/404', (req, res) => res.sendFile(path('/src/templates/404.html')))
 
 app.use('/api/login', authApiController);
 app.use('/api/games', gameApiController);

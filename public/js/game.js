@@ -13,6 +13,11 @@ const loadGame = function (key) {
 
       socket.emit('connected', gameKey)
     })
+    .fail((err) => {
+      if (err.status === 404) {
+        location.href = '/404'
+      }
+    })
 }
 
 const prepareBoard = function () {
