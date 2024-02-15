@@ -137,21 +137,7 @@ const handleShake = async function (game, diceNumber) {
   let nextTurn = game.turn
   const playerPosition = game.players[game.turn].position
 
-  if (playerPosition === 0 && diceNumber !== 6) {
-    return mongodb
-      .collection('games')
-      .updateOne(
-        { key: game.key },
-        {
-          $set: {
-            turn: game.turn == game.players.length - 1 ? 0 : game.turn + 1
-          }
-        }
-      )
-  }
-
   nextTurn = game.turn == game.players.length - 1 ? 0 : game.turn + 1
-
   if (diceNumber === 6) {
     nextTurn = game.turn
   }
