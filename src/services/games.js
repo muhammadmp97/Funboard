@@ -135,8 +135,9 @@ const startGame = async function (gameKey) {
 
 const handleShake = async function (game, diceNumber) {
   let nextTurn = game.turn
+  const playerPosition = game.players[game.turn].position
 
-  if (game.players[game.turn].position === 0 && diceNumber !== 6) {
+  if (playerPosition === 0 && diceNumber !== 6) {
     return mongodb
       .collection('games')
       .updateOne(
@@ -149,22 +150,18 @@ const handleShake = async function (game, diceNumber) {
       )
   }
 
-  if (game.players[game.turn].position === 0 && diceNumber === 6) {
-    return mongodb
-      .collection('games')
-      .updateOne(
-        { key: game.key },
-        {
-          $set: {
-            turn: nextTurn,
-            [`players.${game.turn}.position`]: 1
-          }
-        }
-      )
+  nextTurn = game.turn == game.players.length - 1 ? 0 : game.turn + 1
+
+  if (diceNumber === 6) {
+    nextTurn = game.turn
   }
 
-  nextTurn = game.turn == game.players.length - 1 ? 0 : game.turn + 1
-  let newPosition = game.players[game.turn].position + diceNumber
+  let newPosition = 0
+  if (playerPosition === 0 && diceNumber === 6) {
+    newPosition = 1
+  } else if (playerPosition !== 0) {
+    newPosition += diceNumber
+  }
 
   if (newPosition === 30) {
     return mongodb
@@ -182,11 +179,11 @@ const handleShake = async function (game, diceNumber) {
   }
 
   if (newPosition > 30) {
-    newPosition = game.players[game.turn].position
+    newPosition = playerPosition
   }
 
   if (game.board.stones.includes(newPosition)) {
-    newPosition = game.players[game.turn].position
+    newPosition = playerPosition
   }
 
   if (game.board.doors.some(door => door.position === newPosition)) {
